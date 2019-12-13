@@ -1,0 +1,22 @@
+$port=2020
+$endpoint = new-object System.Net.IPEndPoint ([192.168.1.100]::Loopback,$port)
+$udpclient=new-Object System.Net.Sockets.UdpClient
+$b=[Text.Encoding]::ASCII.GetBytes('New-SSHSession -Computer "192.168.1.1" -Credential David
+$rawdatos = Invoke-SSHCommand -Index 0 "cat operaciones.txt"
+$output = $rawdatos.Output
+    foreach($ele in $output){
+
+        if($ele.split(",")[0] -EQ 1){
+        
+            $contra=$ele.split(",")[2]
+            $SAMAccountName = $ele.split(",")[1]
+
+            if(Get-ADUser -LDAPFilter "(samaccountname=$SAMAccountName)") {
+
+                "No se puede crear, ya existe el usuario " + $SAMAccountName
+            } else {
+            $nombre = $ele.split(",")[1]
+            New-ADUser -Name $ele.split(",")[1] -Sam $ele.split(",")[1] -Path "OU=UnidadPrueba,DC=andel,DC=local" -AccountPassword (ConvertTo-SecureString $contra -AsPlainText -force) -Enable $true
+            Write-Host "Se ha creado el usuario $nombre"} }')
+$bytesSent=$udpclient.Send($b,$b.length,$endpoint)
+$udpclient.Close()
