@@ -1,0 +1,25 @@
+#Dominio
+$dominioLDAP="DC=Andel,DC=local"
+
+#Unidades organizativas
+New-ADOrganizationalUnit -DisplayName "grupo1" -Name "grupo1" -path $dominioLDAP
+New-ADOrganizationalUnit -DisplayName "grupo2" -Name "grupo2" -path $dominioLDAP
+New-ADOrganizationalUnit -DisplayName "grupo3" -Name "grupo3" -path $dominioLDAP
+New-ADOrganizationalUnit -DisplayName "grupo4" -Name "grupo4" -path $dominioLDAP
+New-ADOrganizationalUnit -DisplayName "grupo5" -Name "grupo5" -path $dominioLDAP
+New-ADOrganizationalUnit -DisplayName "grupo6" -Name "grupo6" -path $dominioLDAP
+
+#Grupos
+New-ADGroup -DisplayName "Asir1" -Name "Asir1" -GroupScope DomainLocal -GroupCategory Security -Path "C:\ASO\Grado superior"
+New-ADGroup -DisplayName "Asir2" -Name "Asir2" -GroupScope DomainLocal -GroupCategory Security -Path "C:\ASO\Grado superior"
+
+#Usuarios
+New-ADUser -DisplayName "Lucas" -Name "Lucas" -UserPrincipalName "Operador" -Enabled:$true -Path "OU=grupo1,DC=Andel,DC=local" -AccountPassword (ConvertTo-SecureString -string "1928" -AsPlainText -Force) -ChangePasswordAtLogon:$True
+New-ADUser -DisplayName "Sergio" -Name "Sergio" -UserPrincipalName "Operador" -Enabled:$true -Path "OU=grupo2,DC=Andel,DC=local" -AccountPassword (ConvertTo-SecureString -string "1928" -AsPlainText -Force) -ChangePasswordAtLogon:$True
+New-ADUser -DisplayName "Aron" -Name "Aron" -UserPrincipalName "Operador" -Enabled:$true -Path "OU=grupo3,DC=Andel,DC=local" -AccountPassword (ConvertTo-SecureString -string "1928" -AsPlainText -Force) -ChangePasswordAtLogon:$True
+New-ADUser -DisplayName "Manu" -Name "Manu" -UserPrincipalName "Operador" -Enabled:$true -Path "OU=grupo4,DC=Andel,DC=local" -AccountPassword (ConvertTo-SecureString -string "1928" -AsPlainText -Force) -ChangePasswordAtLogon:$True
+New-ADUser -DisplayName "Jorge" -Name "Jorge" -UserPrincipalName "Operador" -Enabled:$true -Path "OU=grupo5,DC=Andel,DC=local" -AccountPassword (ConvertTo-SecureString -string "1928" -AsPlainText -Force) -ChangePasswordAtLogon:$True
+New-ADUser -DisplayName "Kike" -Name "Kike" -UserPrincipalName "Operador" -Enabled:$true -Path "OU=grupo6,DC=Andel,DC=local" -AccountPassword (ConvertTo-SecureString -string "1928" -AsPlainText -Force) -ChangePasswordAtLogon:$True
+
+#Borrar OU
+Get-ADOrganizationalUnit -Filter {Name -eq "Grupo6"} | Set-ADOrganizationalUnit -ProtectedFromAccidentalDeletion:$false | Remove-ADOrganizationalUnit -confirm:$false
